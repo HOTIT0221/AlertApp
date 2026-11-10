@@ -134,8 +134,12 @@
                         </StackPanel>
 
                         <!-- Sound -->
-                        <Grid>
-                            <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
                                 <FontIcon Glyph="&#xE767;" FontSize="18" Foreground="{StaticResource TextSecondaryBrush}" />
                                 <StackPanel>
                                     <TextBlock Text="Gentle sound" FontSize="15" FontWeight="SemiBold"
@@ -144,8 +148,8 @@
                                                Foreground="{StaticResource TextTertiaryBrush}" />
                                 </StackPanel>
                             </StackPanel>
-                            <ToggleSwitch x:Name="SoundInput" IsOn="True" OnContent="" OffContent=""
-                                          HorizontalAlignment="Right" />
+                            <ToggleSwitch Grid.Column="1" x:Name="SoundInput" IsOn="True" OnContent="" OffContent=""
+                                          MinWidth="0" VerticalAlignment="Center" />
                         </Grid>
 
                         <!-- Validation -->
@@ -278,31 +282,6 @@
                     </Border>
                 </StackPanel>
             </Grid>
-
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup>
-                    <VisualState x:Name="NarrowState">
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="0" />
-                        </VisualState.StateTriggers>
-                        <VisualState.Setters>
-                            <Setter Target="Col1.Width" Value="0" />
-                            <Setter Target="Col0.Width" Value="*" />
-                            <Setter Target="FormCard.MaxWidth" Value="99999" />
-                            <Setter Target="FormCard.(Grid.Row)" Value="0" />
-                            <Setter Target="FormCard.Margin" Value="0,0,0,0" />
-                            <Setter Target="ListColumn.(Grid.Column)" Value="0" />
-                            <Setter Target="ListColumn.(Grid.Row)" Value="1" />
-                            <Setter Target="ListColumn.Margin" Value="0,24,0,0" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="WideState">
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="1100" />
-                        </VisualState.StateTriggers>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
         </Grid>
     </ScrollViewer>
 </Page>

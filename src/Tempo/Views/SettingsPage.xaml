@@ -20,14 +20,18 @@
                 <StackPanel Spacing="4">
                     <TextBlock Text="Behaviour" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
 
-                    <Grid Padding="0,10">
+                    <Grid Padding="0,10" ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" MaxWidth="440" HorizontalAlignment="Left">
                             <TextBlock Text="When I close the window" FontSize="15" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                                       Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" />
                             <TextBlock Text="Keep reminders running in the system tray, or exit Tempo completely."
                                        FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
                         </StackPanel>
-                        <ComboBox x:Name="CloseBehaviorInput" HorizontalAlignment="Right" MinWidth="220"
+                        <ComboBox x:Name="CloseBehaviorInput" Grid.Column="1" MinWidth="220"
                                   VerticalAlignment="Center" SelectionChanged="OnSettingChanged">
                             <ComboBoxItem Content="Keep running in the tray" />
                             <ComboBoxItem Content="Exit Tempo" />
@@ -35,26 +39,34 @@
                     </Grid>
                     <Border Height="1" Background="{StaticResource BorderBrush}" />
 
-                    <Grid Padding="0,10">
-                        <StackPanel MaxWidth="440" HorizontalAlignment="Left">
+                    <Grid Padding="0,10" ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" MaxWidth="440" HorizontalAlignment="Left">
                             <TextBlock Text="Start with Windows" FontSize="15" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                                       Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" />
                             <TextBlock Text="Launch Tempo automatically (hidden in the tray) when you sign in."
                                        FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
                         </StackPanel>
-                        <ToggleSwitch x:Name="StartupInput" HorizontalAlignment="Right" OnContent="" OffContent=""
+                        <ToggleSwitch x:Name="StartupInput" Grid.Column="1" MinWidth="0" OnContent="" OffContent=""
                                       VerticalAlignment="Center" Toggled="OnStartupToggled" />
                     </Grid>
                     <Border Height="1" Background="{StaticResource BorderBrush}" />
 
-                    <Grid Padding="0,10">
-                        <StackPanel MaxWidth="440" HorizontalAlignment="Left">
+                    <Grid Padding="0,10" ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" MaxWidth="440" HorizontalAlignment="Left">
                             <TextBlock Text="Gentle sound" FontSize="15" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                                       Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" />
                             <TextBlock Text="Play a subtle sound with alerts (each alert can still be silenced individually)."
                                        FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
                         </StackPanel>
-                        <ToggleSwitch x:Name="SoundInput" HorizontalAlignment="Right" OnContent="" OffContent=""
+                        <ToggleSwitch x:Name="SoundInput" Grid.Column="1" MinWidth="0" OnContent="" OffContent=""
                                       VerticalAlignment="Center" Toggled="OnSettingChanged" />
                     </Grid>
                 </StackPanel>
@@ -65,14 +77,18 @@
                 <StackPanel Spacing="4">
                     <TextBlock Text="Scheduling" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
 
-                    <Grid Padding="0,10">
-                        <StackPanel MaxWidth="400" HorizontalAlignment="Left">
+                    <Grid Padding="0,10" ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" MaxWidth="400" HorizontalAlignment="Left">
                             <TextBlock Text="Time format" FontSize="15" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                                       Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" />
                             <TextBlock Text="How times are shown throughout Tempo." FontSize="13"
                                        Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
                         </StackPanel>
-                        <ComboBox x:Name="ClockInput" HorizontalAlignment="Right" MinWidth="220"
+                        <ComboBox x:Name="ClockInput" Grid.Column="1" MinWidth="220"
                                   VerticalAlignment="Center" SelectionChanged="OnSettingChanged">
                             <ComboBoxItem Content="Follow Windows setting" />
                             <ComboBoxItem Content="12-hour (9:00 AM)" />
@@ -81,14 +97,18 @@
                     </Grid>
                     <Border Height="1" Background="{StaticResource BorderBrush}" />
 
-                    <Grid Padding="0,10">
-                        <StackPanel MaxWidth="400" HorizontalAlignment="Left">
+                    <Grid Padding="0,10" ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" MaxWidth="400" HorizontalAlignment="Left">
                             <TextBlock Text="Missed reminders" FontSize="15" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                                       Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" />
                             <TextBlock Text="What to do with reminders whose time passed while Tempo wasn't running."
                                        FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
                         </StackPanel>
-                        <ComboBox x:Name="MissedInput" HorizontalAlignment="Right" MinWidth="220"
+                        <ComboBox x:Name="MissedInput" Grid.Column="1" MinWidth="220"
                                   VerticalAlignment="Center" SelectionChanged="OnSettingChanged">
                             <ComboBoxItem Content="Show one catch-up reminder" />
                             <ComboBoxItem Content="Skip missed reminders" />
@@ -96,14 +116,18 @@
                     </Grid>
                     <Border Height="1" Background="{StaticResource BorderBrush}" />
 
-                    <Grid Padding="0,10">
-                        <StackPanel MaxWidth="400" HorizontalAlignment="Left">
+                    <Grid Padding="0,10" ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" MaxWidth="400" HorizontalAlignment="Left">
                             <TextBlock Text="Default snooze" FontSize="15" FontWeight="SemiBold"
-                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                                       Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" />
                             <TextBlock Text="The snooze length suggested on alerts, in minutes." FontSize="13"
                                        Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
                         </StackPanel>
-                        <controls:NumberBox x:Name="SnoozeInput" HorizontalAlignment="Right" MinWidth="140"
+                        <controls:NumberBox x:Name="SnoozeInput" Grid.Column="1" MinWidth="140"
                                             VerticalAlignment="Center" Minimum="1" Maximum="1440" Value="10"
                                             SpinButtonPlacementMode="Compact" ValueChanged="OnSnoozeChanged" />
                     </Grid>

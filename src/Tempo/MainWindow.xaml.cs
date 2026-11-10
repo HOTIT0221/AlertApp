@@ -27,7 +27,7 @@ public sealed partial class MainWindow : Window
             presenter.PreferredMinimumWidth = 920;
             presenter.PreferredMinimumHeight = 640;
         }
-        AppWindow.Resize(new Windows.Graphics.SizeInt32(1240, 840));
+        AppWindow.Resize(new Windows.Graphics.SizeInt32(1480, 920));
 
         _nav = new()
         {

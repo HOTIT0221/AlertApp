@@ -19,11 +19,48 @@ public sealed partial class AlertsPage : Page
     private Alert? _lastDeleted;
     private DispatcherTimer? _undoTimer;
 
+    private const double StackBelowWidth = 880;
+    private bool? _stacked;
+
     public AlertsPage()
     {
         InitializeComponent();
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
+        SizeChanged += (_, e) => ApplyResponsiveLayout(e.NewSize.Width);
+    }
+
+    /// <summary>
+    /// Switches between the two-column (form beside list) and stacked (form above list) layouts
+    /// based on the available width. Done in code because an AdaptiveTrigger inside the page's
+    /// ScrollViewer does not reliably fire.
+    /// </summary>
+    private void ApplyResponsiveLayout(double width)
+    {
+        bool stacked = width < StackBelowWidth;
+        if (_stacked == stacked) return;
+        _stacked = stacked;
+
+        if (stacked)
+        {
+            Col0.Width = new GridLength(1, GridUnitType.Star);
+            Col1.Width = new GridLength(0);
+            Grid.SetRow(FormCard, 0); Grid.SetColumn(FormCard, 0);
+            FormCard.Margin = new Thickness(0);
+            FormCard.MaxWidth = double.PositiveInfinity;
+            Grid.SetRow(ListColumn, 1); Grid.SetColumn(ListColumn, 0);
+            ListColumn.Margin = new Thickness(0, 24, 0, 0);
+        }
+        else
+        {
+            Col0.Width = new GridLength(1, GridUnitType.Star);
+            Col1.Width = new GridLength(1.1, GridUnitType.Star);
+            Grid.SetRow(FormCard, 0); Grid.SetColumn(FormCard, 0);
+            FormCard.Margin = new Thickness(0, 0, 16, 0);
+            FormCard.MaxWidth = 560;
+            Grid.SetRow(ListColumn, 0); Grid.SetColumn(ListColumn, 1);
+            ListColumn.Margin = new Thickness(16, 0, 0, 0);
+        }
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
@@ -38,6 +75,7 @@ public sealed partial class AlertsPage : Page
         SelectSegment("Daily");
         SelectFilter("All");
         Refresh();
+        ApplyResponsiveLayout(ActualWidth);
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
