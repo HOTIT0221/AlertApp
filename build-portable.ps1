@@ -13,7 +13,8 @@
 param(
     [string]$Configuration = "Release",
     [string]$Runtime = "win-x64",
-    [string]$Version = "1.0.0"
+    [string]$Version = "1.0.0",
+    [switch]$SkipPublish   # reuse an existing publish\Tempo (e.g. produced by build-installer.ps1)
 )
 
 $ErrorActionPreference = "Stop"
@@ -24,11 +25,16 @@ if (-not (Test-Path $dotnet)) { $dotnet = "dotnet" }
 $publishDir = Join-Path $root "publish\Tempo"
 $proj = Join-Path $root "src\Tempo\Tempo.csproj"
 
-Write-Host "==> Publishing Tempo ($Configuration / $Runtime)..." -ForegroundColor Cyan
-if (Test-Path $publishDir) { Remove-Item $publishDir -Recurse -Force }
-& $dotnet publish $proj -c $Configuration -r $Runtime -p:Platform=x64 `
-    -p:WindowsAppSDKSelfContained=true -p:SelfContained=true --self-contained true -o $publishDir
-if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed." }
+if ($SkipPublish -and (Test-Path (Join-Path $publishDir "Tempo.exe"))) {
+    Write-Host "==> Reusing existing publish at $publishDir" -ForegroundColor Cyan
+}
+else {
+    Write-Host "==> Publishing Tempo ($Configuration / $Runtime)..." -ForegroundColor Cyan
+    if (Test-Path $publishDir) { Remove-Item $publishDir -Recurse -Force }
+    & $dotnet publish $proj -c $Configuration -r $Runtime -p:Platform=x64 `
+        -p:WindowsAppSDKSelfContained=true -p:SelfContained=true --self-contained true -o $publishDir
+    if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed." }
+}
 
 # Stage a copy so the portable marker never ends up in the installer's publish output.
 $staging = Join-Path $root "dist\portable-staging"
