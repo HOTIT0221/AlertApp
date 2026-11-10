@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>Tempo</RootNamespace>
+    <AssemblyName>Tempo</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64;ARM64</Platforms>
+    <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Unpackaged (no MSIX) so the app can be delivered with a plain installer and
+         self-contains the Windows App SDK runtime. -->
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+
+    <!-- Provide a custom entry point for single-instance redirection. -->
+    <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+
+    <ApplicationIcon>Assets\Tempo.ico</ApplicationIcon>
+    <AssemblyTitle>Tempo</AssemblyTitle>
+    <Product>Tempo</Product>
+    <Company>Tempo</Company>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.6.5" />
+    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tempo.Core\Tempo.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Tempo.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!--
+    Work around a WinUI unpackaged-publish gap: `dotnet publish` does not copy the app's own
+    compiled XAML (*.xbf) nor its resource index (<AssemblyName>.pri) into the publish output,
+    which makes the published app fail to parse its XAML at startup. Copy them from the build
+    output after publish so the self-contained app actually runs.
+  -->
+  <Target Name="_IncludeAppPriAndXbfInPublish" AfterTargets="Publish">
+    <ItemGroup>
+      <_TempoAppPri Include="$(TargetDir)$(AssemblyName).pri" Condition="Exists('$(TargetDir)$(AssemblyName).pri')" />
+      <_TempoAppXbf Include="$(TargetDir)**\*.xbf" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_TempoAppPri)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false"
+          Condition="'@(_TempoAppPri)' != ''" />
+    <Copy SourceFiles="@(_TempoAppXbf)"
+          DestinationFiles="@(_TempoAppXbf->'$(PublishDir)%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="false" Condition="'@(_TempoAppXbf)' != ''" />
+    <Message Importance="high" Text="Tempo: copied app PRI and @(_TempoAppXbf->Count()) XBF file(s) into $(PublishDir)" />
+  </Target>
+
+</Project>

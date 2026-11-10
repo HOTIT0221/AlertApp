@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Tempo.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    Background="{StaticResource PageBackgroundBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Padding="40,32,40,48" MaxWidth="760" HorizontalAlignment="Left" Spacing="20">
+            <StackPanel Spacing="6" Margin="4,0,0,4">
+                <TextBlock Text="Settings" Style="{StaticResource H1Style}" />
+                <TextBlock Text="Tune how Tempo behaves on your PC." Style="{StaticResource SubtitleStyle}" />
+            </StackPanel>
+
+            <controls:InfoBar x:Name="NotificationInfo" IsOpen="False" IsClosable="False" />
+
+            <!-- Behaviour -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Behaviour" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
+
+                    <Grid Padding="0,10">
+                        <StackPanel Grid.Column="0" MaxWidth="440" HorizontalAlignment="Left">
+                            <TextBlock Text="When I close the window" FontSize="15" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                            <TextBlock Text="Keep reminders running in the system tray, or exit Tempo completely."
+                                       FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <ComboBox x:Name="CloseBehaviorInput" HorizontalAlignment="Right" MinWidth="220"
+                                  VerticalAlignment="Center" SelectionChanged="OnSettingChanged">
+                            <ComboBoxItem Content="Keep running in the tray" />
+                            <ComboBoxItem Content="Exit Tempo" />
+                        </ComboBox>
+                    </Grid>
+                    <Border Height="1" Background="{StaticResource BorderBrush}" />
+
+                    <Grid Padding="0,10">
+                        <StackPanel MaxWidth="440" HorizontalAlignment="Left">
+                            <TextBlock Text="Start with Windows" FontSize="15" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                            <TextBlock Text="Launch Tempo automatically (hidden in the tray) when you sign in."
+                                       FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <ToggleSwitch x:Name="StartupInput" HorizontalAlignment="Right" OnContent="" OffContent=""
+                                      VerticalAlignment="Center" Toggled="OnStartupToggled" />
+                    </Grid>
+                    <Border Height="1" Background="{StaticResource BorderBrush}" />
+
+                    <Grid Padding="0,10">
+                        <StackPanel MaxWidth="440" HorizontalAlignment="Left">
+                            <TextBlock Text="Gentle sound" FontSize="15" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                            <TextBlock Text="Play a subtle sound with alerts (each alert can still be silenced individually)."
+                                       FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <ToggleSwitch x:Name="SoundInput" HorizontalAlignment="Right" OnContent="" OffContent=""
+                                      VerticalAlignment="Center" Toggled="OnSettingChanged" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Scheduling -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Scheduling" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8" />
+
+                    <Grid Padding="0,10">
+                        <StackPanel MaxWidth="400" HorizontalAlignment="Left">
+                            <TextBlock Text="Time format" FontSize="15" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                            <TextBlock Text="How times are shown throughout Tempo." FontSize="13"
+                                       Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <ComboBox x:Name="ClockInput" HorizontalAlignment="Right" MinWidth="220"
+                                  VerticalAlignment="Center" SelectionChanged="OnSettingChanged">
+                            <ComboBoxItem Content="Follow Windows setting" />
+                            <ComboBoxItem Content="12-hour (9:00 AM)" />
+                            <ComboBoxItem Content="24-hour (09:00)" />
+                        </ComboBox>
+                    </Grid>
+                    <Border Height="1" Background="{StaticResource BorderBrush}" />
+
+                    <Grid Padding="0,10">
+                        <StackPanel MaxWidth="400" HorizontalAlignment="Left">
+                            <TextBlock Text="Missed reminders" FontSize="15" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                            <TextBlock Text="What to do with reminders whose time passed while Tempo wasn't running."
+                                       FontSize="13" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <ComboBox x:Name="MissedInput" HorizontalAlignment="Right" MinWidth="220"
+                                  VerticalAlignment="Center" SelectionChanged="OnSettingChanged">
+                            <ComboBoxItem Content="Show one catch-up reminder" />
+                            <ComboBoxItem Content="Skip missed reminders" />
+                        </ComboBox>
+                    </Grid>
+                    <Border Height="1" Background="{StaticResource BorderBrush}" />
+
+                    <Grid Padding="0,10">
+                        <StackPanel MaxWidth="400" HorizontalAlignment="Left">
+                            <TextBlock Text="Default snooze" FontSize="15" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextPrimaryBrush}" />
+                            <TextBlock Text="The snooze length suggested on alerts, in minutes." FontSize="13"
+                                       Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <controls:NumberBox x:Name="SnoozeInput" HorizontalAlignment="Right" MinWidth="140"
+                                            VerticalAlignment="Center" Minimum="1" Maximum="1440" Value="10"
+                                            SpinButtonPlacementMode="Compact" ValueChanged="OnSnoozeChanged" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Reliability explainer -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="How reminders run" Style="{StaticResource SectionTitleStyle}" />
+                    <TextBlock TextWrapping="Wrap" FontSize="13.5" Foreground="{StaticResource TextSecondaryBrush}">
+                        Tempo schedules reminders inside the app itself. What that means:
+                    </TextBlock>
+                    <StackPanel Spacing="10">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE73E;" FontSize="16" Foreground="#3AA76D" VerticalAlignment="Top" Margin="0,2,0,0" />
+                            <TextBlock TextWrapping="Wrap" FontSize="13.5" Foreground="{StaticResource TextSecondaryBrush}" Width="600">
+                                <Run FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}">Window closed, running in the tray —</Run>
+                                reminders fire normally. This is the default, so closing the window is safe.
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <FontIcon Glyph="&#xE7BA;" FontSize="16" Foreground="#C98A1B" VerticalAlignment="Top" Margin="0,2,0,0" />
+                            <TextBlock TextWrapping="Wrap" FontSize="13.5" Foreground="{StaticResource TextSecondaryBrush}" Width="600">
+                                <Run FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}">Tempo fully exited, or PC asleep / shut down —</Run>
+                                reminders do not fire at that exact moment. When Tempo next runs (including on resume), it delivers what was missed, following your "Missed reminders" choice above.
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- About -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="About" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,4" />
+                    <TextBlock Text="Tempo 1.0 — a calm, offline reminder app for Windows 11." FontSize="13.5"
+                               Foreground="{StaticResource TextSecondaryBrush}" />
+                    <TextBlock x:Name="DataPathText" FontSize="12.5" Foreground="{StaticResource TextTertiaryBrush}"
+                               TextWrapping="Wrap" IsTextSelectionEnabled="True" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
