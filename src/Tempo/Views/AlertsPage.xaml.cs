@@ -70,11 +70,11 @@ public sealed partial class AlertsPage : Page
         if (TimeInput.SelectedTime is null)
             TimeInput.SelectedTime = CurrentTimeOfDay();
         if (OnceDateInput.Date is null)
-            OnceDateInput.Date = new DateTimeOffset(DateTime.Today, TimeSpan.Zero);
+            OnceDateInput.Date = new DateTimeOffset(DateTime.Today);
 
         Service.AlertsChanged += Refresh;
 
-        SelectSegment("Daily");
+        SelectSegment("Once");
         SelectFilter("All");
         Refresh();
         ApplyResponsiveLayout(ActualWidth);
@@ -349,13 +349,13 @@ public sealed partial class AlertsPage : Page
         DetailsInput.Text = "";
         SoundInput.IsOn = true;
         TimeInput.SelectedTime = CurrentTimeOfDay();
-        OnceDateInput.Date = new DateTimeOffset(DateTime.Today, TimeSpan.Zero);
+        OnceDateInput.Date = new DateTimeOffset(DateTime.Today);
         EndsInput.SelectedIndex = 0;
         IntervalCountInput.Value = 2;
         IntervalUnitInput.SelectedIndex = 1;
         foreach (var t in new[] { DaySun, DayMon, DayTue, DayWed, DayThu, DayFri, DaySat })
             SetDay(t, false);
-        SelectSegment("Daily");
+        SelectSegment("Once");
     }
 
     // --- List ---
