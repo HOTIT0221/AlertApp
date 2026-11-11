@@ -87,6 +87,9 @@ public sealed class NotificationService : IDisposable
             var builder = new AppNotificationBuilder()
                 .AddArgument("id", alert.Id.ToString())
                 .AddArgument("action", "open")
+                // Reminder keeps the toast on screen until the user acts on it (snooze/dismiss),
+                // instead of auto-dismissing into the Action Center after a few seconds.
+                .SetScenario(AppNotificationScenario.Reminder)
                 .AddText(title);
 
             if (!string.IsNullOrWhiteSpace(alert.Message))
