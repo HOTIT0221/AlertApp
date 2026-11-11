@@ -68,7 +68,9 @@ public sealed partial class AlertsPage : Page
         _use24 = ClockFormatHelper.Use24Hour(Service.Settings.ClockFormat);
         TimeInput.ClockIdentifier = _use24 ? "24HourClock" : "12HourClock";
         if (TimeInput.SelectedTime is null)
-            TimeInput.SelectedTime = new TimeSpan(9, 0, 0);
+            TimeInput.SelectedTime = CurrentTimeOfDay();
+        if (OnceDateInput.Date is null)
+            OnceDateInput.Date = new DateTimeOffset(DateTime.Today, TimeSpan.Zero);
 
         Service.AlertsChanged += Refresh;
 
@@ -327,6 +329,14 @@ public sealed partial class AlertsPage : Page
 
     private void OnCancelEditClick(object sender, RoutedEventArgs e) => ResetForm();
 
+    // Default the form's time to the current wall-clock time (to the minute),
+    // so a new alert starts from "now" rather than a fixed 9:00 AM.
+    private static TimeSpan CurrentTimeOfDay()
+    {
+        var now = DateTime.Now;
+        return new TimeSpan(now.Hour, now.Minute, 0);
+    }
+
     private void ResetForm()
     {
         _editingId = null;
@@ -338,8 +348,8 @@ public sealed partial class AlertsPage : Page
         TitleInput.Text = "";
         DetailsInput.Text = "";
         SoundInput.IsOn = true;
-        TimeInput.SelectedTime = new TimeSpan(9, 0, 0);
-        OnceDateInput.Date = null;
+        TimeInput.SelectedTime = CurrentTimeOfDay();
+        OnceDateInput.Date = new DateTimeOffset(DateTime.Today, TimeSpan.Zero);
         EndsInput.SelectedIndex = 0;
         IntervalCountInput.Value = 2;
         IntervalUnitInput.SelectedIndex = 1;
