@@ -7,7 +7,7 @@
     Background="{StaticResource PageBackgroundBrush}">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Padding="40,32,40,40" MaxWidth="900" HorizontalAlignment="Left" Spacing="24">
+        <StackPanel Padding="40,32,40,40" HorizontalAlignment="Stretch" Spacing="24">
             <StackPanel Spacing="6" Margin="4,0,0,0">
                 <TextBlock Text="Upcoming" Style="{StaticResource H1Style}" />
                 <TextBlock Text="Everything ahead, sorted by what happens next." Style="{StaticResource SubtitleStyle}" />

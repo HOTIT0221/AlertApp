@@ -7,7 +7,7 @@
     Background="{StaticResource PageBackgroundBrush}">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Padding="40,32,40,48" MaxWidth="760" HorizontalAlignment="Left" Spacing="20">
+        <StackPanel Padding="40,32,40,48" HorizontalAlignment="Stretch" Spacing="20">
             <StackPanel Spacing="6" Margin="4,0,0,4">
                 <TextBlock Text="Settings" Style="{StaticResource H1Style}" />
                 <TextBlock Text="Tune how Tempo behaves on your PC." Style="{StaticResource SubtitleStyle}" />

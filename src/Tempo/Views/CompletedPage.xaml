@@ -7,13 +7,13 @@
     Background="{StaticResource PageBackgroundBrush}">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Padding="40,32,40,40" MaxWidth="900" HorizontalAlignment="Left" Spacing="24">
+        <StackPanel Padding="40,32,40,40" HorizontalAlignment="Stretch" Spacing="24">
             <Grid Margin="4,0,0,0">
                 <StackPanel Spacing="6">
                     <TextBlock Text="Completed" Style="{StaticResource H1Style}" />
                     <TextBlock Text="A record of reminders that have run their course." Style="{StaticResource SubtitleStyle}" />
                 </StackPanel>
-                <Button x:Name="ClearAllButton" Content="Clear all" VerticalAlignment="Bottom"
+                <Button x:Name="ClearAllButton" Content="Clear all" VerticalAlignment="Center"
                         HorizontalAlignment="Right" Padding="14,10" CornerRadius="10" Click="OnClearAll" />
             </Grid>
 
